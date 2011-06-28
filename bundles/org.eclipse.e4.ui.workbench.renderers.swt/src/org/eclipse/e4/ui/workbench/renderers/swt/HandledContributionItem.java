@@ -138,6 +138,7 @@ public class HandledContributionItem extends ContributionItem {
 	public static ToolItemUpdateTimer toolItemUpdater = new ToolItemUpdateTimer();
 
 	private static final String DISPOSABLE_CHECK = "IDisposable"; //$NON-NLS-1$
+	private static final String WW_SUPPORT = "org.eclipse.ui.IWorkbenchWindow"; //$NON-NLS-1$
 	private static final String HCI_STATIC_CONTEXT = "HCI-staticContext"; //$NON-NLS-1$
 	private MHandledItem model;
 	private Widget widget;
@@ -346,8 +347,11 @@ public class HandledContributionItem extends ContributionItem {
 		Object obj = model.getTransientData().get(ItemType.CHECK.toString());
 		if (obj instanceof IContextFunction) {
 			IEclipseContext context = getContext(model);
+			IEclipseContext staticContext = getStaticContext(null);
+			staticContext.set(WW_SUPPORT, context.get(WW_SUPPORT));
+
 			IContextFunction func = (IContextFunction) obj;
-			obj = func.compute(context);
+			obj = func.compute(staticContext);
 			if (obj != null) {
 				model.getTransientData().put(DISPOSABLE_CHECK, obj);
 			}
