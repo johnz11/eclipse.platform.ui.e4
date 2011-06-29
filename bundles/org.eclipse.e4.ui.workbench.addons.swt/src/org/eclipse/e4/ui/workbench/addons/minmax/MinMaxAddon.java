@@ -68,7 +68,7 @@ public class MinMaxAddon {
 
 	@Inject
 	IEventBroker eventBroker;
-
+	// asdf
 	@Inject
 	EModelService modelService;
 
